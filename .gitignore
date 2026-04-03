@@ -1,8 +1,12 @@
 node_modules/
-build/
 dist/
-coverage/
-.DS_Store
+build/
+.vercel
+.env
+.env.local
+.env.*.local
 *.log
-.env*
-!.env.example
+.DS_Store
+coverage/
+.vscode/
+.idea/
