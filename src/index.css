@@ -1,49 +1,285 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-accent: "Outfit", sans-serif;
-  
-  --color-brand-navy: #020617;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
   --color-brand-blue: #2563eb;
   --color-brand-cyan: #22d3ee;
-  --color-brand-surface: #0f172a;
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-surface: var(--brand-surface);
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+}
+
+:root {
+  --brand-navy: #020617;
+  --brand-surface: #0a1128;
+  --text-base: #f1f5f9;
+  --text-muted: #8892a4;
+  --glass-bg: rgba(10, 17, 40, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --accent-glow: rgba(37, 99, 235, 0.25);
+  --cyan-glow-color: rgba(34, 211, 238, 0.15);
+}
+
+:root.light {
+  --brand-navy: #f0f4ff;
+  --brand-surface: #ffffff;
+  --text-base: #0f172a;
+  --text-muted: #475569;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --accent-glow: rgba(37, 99, 235, 0.1);
 }
 
 @layer base {
   body {
-    @apply bg-brand-navy text-white font-sans antialiased;
+    background-color: var(--brand-navy);
+    color: var(--text-base);
+    @apply font-sans antialiased transition-colors duration-300;
   }
-  
+
   h1, h2, h3, h4 {
     @apply font-display tracking-tight;
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--brand-navy); }
+  ::-webkit-scrollbar-thumb { background: #2563eb44; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #2563eb99; }
 }
 
+/* ─── Glass ─── */
 .glass {
-  background: rgba(30, 41, 59, 0.5);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
 }
 
+/* ─── Glow Utilities ─── */
 .blue-glow {
-  box-shadow: 0 0 40px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.2), 0 0 80px rgba(37, 99, 235, 0.08);
 }
 
 .cyan-glow {
-  box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.18), 0 0 60px rgba(34, 211, 238, 0.06);
 }
 
+.card-glow-hover {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-glow-hover:hover {
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.15), 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ─── Border Gradient ─── */
+.border-gradient {
+  border: 1px solid transparent;
+  background: linear-gradient(to bottom, #0a1128, #0a1128) padding-box,
+              linear-gradient(135deg, #2563eb, #22d3ee) border-box;
+}
+
+/* ─── Text Gradient ─── */
 .text-gradient {
-  background: linear-gradient(to right, #FFFFFF, #94a3b8);
+  background: linear-gradient(135deg, #f1f5f9, #8892a4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.border-gradient {
-  border: 1px solid transparent;
-  background: linear-gradient(to right, #020617, #020617) padding-box,
-              linear-gradient(to right, #2563eb, #22d3ee) border-box;
+.text-gradient-brand {
+  background: linear-gradient(135deg, #2563eb, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Section Label (monospace tag) ─── */
+.section-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #22d3ee;
+  opacity: 0.8;
+}
+
+/* ─── Dot Grid Background ─── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Diagonal Line Divider ─── */
+.diagonal-divider {
+  position: relative;
+  overflow: hidden;
+}
+.diagonal-divider::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--brand-navy);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+/* ─── Scan Line Animation ─── */
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(800%); opacity: 0; }
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.6), transparent);
+  animation: scan 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ─── Pulse Dot ─── */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.pulse-dot {
+  position: relative;
+  display: inline-block;
+}
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22d3ee;
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+/* ─── Data Card Corners ─── */
+.corner-brackets {
+  position: relative;
+}
+.corner-brackets::before,
+.corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(34, 211, 238, 0.5);
+  border-style: solid;
+}
+.corner-brackets::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.corner-brackets::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+/* ─── Animated Number (counter effect) ─── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stat-number {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* ─── Gradient Border Glow (for premium card) ─── */
+@keyframes border-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.border-pulse {
+  animation: border-pulse 2.5s ease-in-out infinite;
+}
+
+/* ─── Noise Grain Overlay ─── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* ─── Progress Bar Animated ─── */
+@keyframes fill-bar {
+  from { width: 0%; }
+}
+.fill-bar {
+  animation: fill-bar 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ─── Gradient Line Divider ─── */
+.gradient-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.5), rgba(34,211,238,0.5), transparent);
+}
+
+/* ─── Card Number Label ─── */
+.card-number {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1;
+  background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(34,211,238,0.08));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+}
+
+/* ─── Glowing Icon Box ─── */
+.icon-box-blue {
+  background: rgba(37, 99, 235, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
+}
+.icon-box-cyan {
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.08);
+}
+
+/* ─── Tag Pill ─── */
+.tag-pill {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(34,211,238,0.3);
+  color: #22d3ee;
+  background: rgba(34,211,238,0.06);
+}
+
+/* ─── Ticker / Marquee ─── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 24s linear infinite;
+  display: flex;
+  width: max-content;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
 }
